@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Sales Forecasting</title>
+
+    <style>
+
+        *{
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Segoe UI',Tahoma,sans-serif;
+            background:linear-gradient(
+                135deg,
+                #667eea 0%,
+                #764ba2 100%
+            );
+
+            margin:0;
+            padding:40px 20px;
+            min-height:100vh;
+        }
+
+        .container{
+
+            max-width:650px;
+            margin:0 auto;
+            background:white;
+            padding:40px;
+            border-radius:12px;
+
+            box-shadow:
+            0 20px 60px rgba(
+                0,
+                0,
+                0,
+                .3
+            );
+
+        }
+
+        h1{
+
+            color:#333;
+            margin-top:0;
+            text-align:center;
+            font-size:28px;
+
+        }
+
+        .subtitle{
+
+            text-align:center;
+            color:#666;
+            margin-bottom:30px;
+
+        }
+
+        label{
+
+            display:block;
+            margin-top:15px;
+            color:#444;
+            font-weight:600;
+            font-size:14px;
+
+        }
+
+        input,
+        select{
+
+            width:100%;
+            padding:10px 12px;
+            margin-top:5px;
+            border:1px solid #ccc;
+            border-radius:6px;
+            font-size:15px;
+
+        }
+
+        input:focus,
+        select:focus{
+
+            outline:none;
+            border-color:#667eea;
+
+            box-shadow:
+            0 0 0 3px rgba(
+                102,
+                126,
+                234,
+                .2
+            );
+
+        }
+
+        .row{
+
+            display:flex;
+            gap:15px;
+
+        }
+
+        .row > div{
+
+            flex:1;
+
+        }
+
+        button{
+
+            width:100%;
+            margin-top:25px;
+            padding:14px;
+
+            background:
+            linear-gradient(
+                135deg,
+                #667eea 0%,
+                #764ba2 100%
+            );
+
+            color:white;
+
+            border:none;
+            border-radius:6px;
+
+            font-size:16px;
+            font-weight:600;
+
+            cursor:pointer;
+
+            transition:transform .1s;
+
+        }
+
+        button:hover{
+
+            transform:
+            translateY(-2px);
+
+        }
+
+        .result{
+
+            margin-top:30px;
+            padding:20px;
+
+            background:#f0f4ff;
+
+            border-left:
+            4px solid #667eea;
+
+            border-radius:6px;
+
+            text-align:center;
+
+        }
+
+        .result h3{
+
+            margin-top:0;
+            color:#333;
+
+        }
+
+        .prediction-value{
+
+            font-size:24px;
+            font-weight:bold;
+            color:#2c3e50;
+
+        }
+
+        .footer{
+
+            text-align:center;
+            margin-top:25px;
+            font-size:12px;
+            color:#888;
+
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h1>🛒 Product Sales Forecasting</h1>
+        <p class="subtitle">
+            Predict future product sales using XGBoost Machine Learning
+        </p>
+
+        <form action="/predict" method="post">
+            <div class="row">
+                <div>
+                    <label>Store ID (1–365)</label>
+                    <input type="number" name="store_id" min="1" max="365"
+                           value="{{ input_summary.store_id if input_summary else '175' }}" required>
+                </div>
+                <div>
+                    <label>Date</label>
+                    <input type="date" name="date"
+                           value="{{ input_summary.date if input_summary else '2019-06-15' }}" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div>
+                    <label>Store Type</label>
+                    <select name="store_type" required>
+                        {% set sel = input_summary.store_type if input_summary else 'S4' %}
+                        <option value="S1" {% if sel == 'S1' %}selected{% endif %}>S1</option>
+                        <option value="S2" {% if sel == 'S2' %}selected{% endif %}>S2</option>
+                        <option value="S3" {% if sel == 'S3' %}selected{% endif %}>S3</option>
+                        <option value="S4" {% if sel == 'S4' %}selected{% endif %}>S4</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Location Type</label>
+                    <select name="location_type" required>
+                        {% set sel = input_summary.location_type if input_summary else 'L2' %}
+                        <option value="L1" {% if sel == 'L1' %}selected{% endif %}>L1</option>
+                        <option value="L2" {% if sel == 'L2' %}selected{% endif %}>L2</option>
+                        <option value="L3" {% if sel == 'L3' %}selected{% endif %}>L3</option>
+                        <option value="L4" {% if sel == 'L4' %}selected{% endif %}>L4</option>
+                        <option value="L5" {% if sel == 'L5' %}selected{% endif %}>L5</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Region</label>
+                    <select name="region_code" required>
+                        {% set sel = input_summary.region_code if input_summary else 'R1' %}
+                        <option value="R1" {% if sel == 'R1' %}selected{% endif %}>R1</option>
+                        <option value="R2" {% if sel == 'R2' %}selected{% endif %}>R2</option>
+                        <option value="R3" {% if sel == 'R3' %}selected{% endif %}>R3</option>
+                        <option value="R4" {% if sel == 'R4' %}selected{% endif %}>R4</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div>
+                    <label>Holiday</label>
+                    <select name="holiday" required>
+                        {% set sel = input_summary.holiday if input_summary else '0' %}
+                        <option value="0" {% if sel == '0' %}selected{% endif %}>No (regular day)</option>
+                        <option value="1" {% if sel == '1' %}selected{% endif %}>Yes (holiday)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Discount Active</label>
+                    <select name="discount" required>
+                        {% set sel = input_summary.discount if input_summary else 'Yes' %}
+                        <option value="No" {% if sel == 'No' %}selected{% endif %}>No</option>
+                        <option value="Yes" {% if sel == 'Yes' %}selected{% endif %}>Yes</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit">🔮 Predict Sales</button>
+        </form>
+
+        {% if prediction_text %}
+
+        <div class="result">
+
+        <h3>Predicted Sales</h3>
+
+        <div class="prediction-value">
+
+        {{ prediction_text }}
+
+        </div>
+
+        </div>
+
+        {% endif %}
+
+        <div class="footer">
+            Model: XGBoost • Product Sales Forecasting System
+        </div>
+    </div>
+</body>
+</html>
