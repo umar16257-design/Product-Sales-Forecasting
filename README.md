@@ -22,7 +22,7 @@ The model is deployed using Flask API and includes a user-friendly web interface
 Live Demo: https://product-sales-forecasting-19pj.onrender.com
 Note: The free tier sleeps after 15 min of inactivity. First request after sleep takes ~30-60 sec to wake up — please be patient on your first visit.
 
-Tableau Dashboard: https://public.tableau.com/app/profile/sruthi.s6388/viz/ProductSalesForecasting_17768358106560/DeepDiveStoreRegion
+Tableau Dashboard: https://public.tableau.com/views/MLSalesForecasting01_06_2026/Dashboard3?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
 
 Technical Blog (Medium): https://medium.com/@sruthiswathandran/from-raw-csv-to-live-api-a-retail-sales-forecasting-journey-d38146002b1b
 
