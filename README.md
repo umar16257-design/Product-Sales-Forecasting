@@ -1,6 +1,4 @@
-# Product Sales Forecasting
-
-## Project Overview
+# Retail Sales Forecasting
 
 ## Project Overview
 
@@ -22,7 +20,7 @@ The model is deployed using Flask API and includes a user-friendly web interface
 Live Demo: https://product-sales-forecasting-19pj.onrender.com
 Note: The free tier sleeps after 15 min of inactivity. First request after sleep takes ~30-60 sec to wake up — please be patient on your first visit.
 
-Tableau Dashboard: https://public.tableau.com/views/MLSalesForecasting01_06_2026/Dashboard3?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
+Tableau Dashboard: https://public.tableau.com/views/PredictingRetailSales/SalesPerformance?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
 
 Technical Blog (Medium): https://medium.com/@umar16257/predicting-retail-sales-how-i-built-and-deployed-a-live-forecasting-api-for-365-stores-cf50086cfaf9
 
