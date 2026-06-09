@@ -24,7 +24,7 @@ Note: The free tier sleeps after 15 min of inactivity. First request after sleep
 
 Tableau Dashboard: https://public.tableau.com/views/MLSalesForecasting01_06_2026/Dashboard3?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
 
-Technical Blog (Medium): https://medium.com/@sruthiswathandran/from-raw-csv-to-live-api-a-retail-sales-forecasting-journey-d38146002b1b
+Technical Blog (Medium): https://medium.com/@umar16257/predicting-retail-sales-how-i-built-and-deployed-a-live-forecasting-api-for-365-stores-cf50086cfaf9
 
 ---
 
